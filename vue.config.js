@@ -1,5 +1,5 @@
 const path = require('path');
-const FilemanagerPlugin = require('filemanager-webpack-plugin');
+const FilemanagerPlugin = require('filemanager-plugin').WebpackFilemanager;
 
 function resolve(dir) {
   return path.join(__dirname, dir);
@@ -23,19 +23,24 @@ module.exports = {
     },
     plugins: [
       new FilemanagerPlugin({
-        onEnd: {
-          mkdir: [path.join(__dirname, './package/')],
-          delete: [
-            `./package/${pakageName}.zip`
-          ],
-          archive: [
-            {
-              source: path.join(__dirname, './dist'),
-              destination: path.join(__dirname, `./package/${pakageName}.zip`),
+        events: {
+          start: {
+            del: {
+              items: [path.join(__dirname, `./package/${pakageName}.zip`)]
             }
-          ],
-        },
-      }),
+          },
+          end: {
+            zip: {
+              items: [
+                {
+                  source: path.join(__dirname, './dist'),
+                 destination: path.join(__dirname, `./package/${pakageName}.zip`),
+                }
+              ]
+            }
+          }
+        }
+      })
     ],
   },
   chainWebpack(config) {
