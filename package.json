@@ -1,6 +1,8 @@
 {
-  "name": "mark-name",
-  "version": "0.1.0",
+  "name": "{{ name }}",
+  "version": "1.0.0",
+  "description": "{{ description }}",
+  "author": "{{ author }",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
